@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="apps-element.umd.js" defer></script>
+    <link rel="stylesheet" href="wc-lib.css">
+  </head>
+  <body class="desktop no-touch body--light">
+    <div>
+      <app-digimon></app-digimon>
+    </div>
+    <script>
+      window.addEventListener('DOMContentLoaded', function () {
+        AppsElement.register({
+          apiUrl: 'https://digi-api.com/api/v1/'
+        })
+      })
+    </script>
+  </body>
+</html>
