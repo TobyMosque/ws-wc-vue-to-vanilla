@@ -23,9 +23,19 @@ function setApiUrl(val?: string) {
   appStore.apiUrl = val ?? '/'
 }
 
+function setUrlPath(val?: string) {
+  const appStore = useAppStore(pinia.value)
+  appStore.urlPath = val ?? '/'
+}
+
 function createApp(comp: ReturnType<typeof defineAsyncComponent>) {
+  let styles: string[] | undefined
+  if (import.meta.env.DEV) {
+    styles = [QuasarIconsCss, QuasarStyleSass]
+    console.log(styles)
+  }
   const AppElement = defineCustomElement({
-    styles: [QuasarIconsCss, QuasarStyleSass],
+    styles: styles,
     setup() {      
       return () => pinia.value ? h(AppWrapper, { 
         pinia: pinia.value,
@@ -37,15 +47,28 @@ function createApp(comp: ReturnType<typeof defineAsyncComponent>) {
   return class extends AppElement {
     constructor() {
       super()
+      if (import.meta.env.PROD) {
+        const appStore = useAppStore(pinia.value)
+        const shadow = this.shadowRoot ?? this.attachShadow({ mode: "open" });
+        const style = document.createElement('link')
+        style.rel = 'stylesheet'
+        style.type = "text/css";
+        style.href = `${appStore.urlPath}wc-lib.css`
+        style.media = "all";
+        shadow.appendChild(style);
+
+        console.log(style.href)
+      }
     }
   }
 }
 
 const AppDigimonElement = createApp(defineAsyncComponent(() => import('components/AppDigimon.vue')))
 
-function register({ apiUrl, pinia }: { apiUrl?: string, pinia?: Pinia } = {}) {
+function register({ apiUrl, urlPath, pinia }: { apiUrl?: string, urlPath?: string, pinia?: Pinia } = {}) {
   setPinia(pinia)
   setApiUrl(apiUrl)
+  setUrlPath(urlPath)
   customElements.define('app-digimon', AppDigimonElement)
 }
 
@@ -54,5 +77,6 @@ export {
   register, 
   setPinia,
   setDeviceId,
-  setApiUrl
+  setApiUrl,
+  setUrlPath
 }

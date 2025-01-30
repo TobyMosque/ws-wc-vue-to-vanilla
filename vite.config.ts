@@ -28,16 +28,6 @@ export default defineConfig({
       stores: resolve(__dirname, "src/stores"),
     },
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `
-          @import "../../node_modules/@quasar/extras/material-icons/material-icons.css"; 
-          @import "../../node_modules/quasar/src/css/index.sass"; 
-        `,
-      },
-    },
-  },
   build: {
     cssCodeSplit: false,
     cssMinify: true,

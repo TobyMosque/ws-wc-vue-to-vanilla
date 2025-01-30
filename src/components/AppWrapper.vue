@@ -18,7 +18,7 @@ export default defineComponent({
   setup(props) {
     const subApp = ref<HTMLDialogElement>()
     const { pinia, is } = toRefs(props)
-
+    
     onMounted(() => {
       if (!subApp.value) {
         return;
