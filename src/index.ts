@@ -32,7 +32,6 @@ function createApp(comp: ReturnType<typeof defineAsyncComponent>) {
   let styles: string[] | undefined
   if (import.meta.env.DEV) {
     styles = [QuasarIconsCss, QuasarStyleSass]
-    console.log(styles)
   }
   const AppElement = defineCustomElement({
     styles: styles,
@@ -56,8 +55,6 @@ function createApp(comp: ReturnType<typeof defineAsyncComponent>) {
         style.href = `${appStore.urlPath}wc-lib.css`
         style.media = "all";
         shadow.appendChild(style);
-
-        console.log(style.href)
       }
     }
   }
